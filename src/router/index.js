@@ -54,7 +54,8 @@ const router = createRouter({
               meta: { title: 'Article-Detail' }
             }
           ]
-        }
+        },
+        
       ]
     },
     {

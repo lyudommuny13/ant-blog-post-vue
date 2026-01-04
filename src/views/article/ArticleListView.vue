@@ -28,7 +28,6 @@
 </template>
 <script setup>
 import BaseTable from '@/components/ui/base/BaseTable.vue';
-import BaseModal from '@/components/ui/base/BaseModal.vue';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { useArticleStore } from '@/stores/article';

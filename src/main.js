@@ -10,6 +10,7 @@ import "vue-toastification/dist/index.css";
 // base component
 import BaseButton from './components/ui/base/BaseButton.vue'
 import BaseInput from './components/ui/base/BaseInput.vue'
+import BaseModal from './components/ui/base/BaseModal.vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -19,6 +20,7 @@ const app = createApp(App)
 
 app.component('BaseButton', BaseButton)
 app.component('BaseInput', BaseInput)
+app.component('BaseModal', BaseModal)
 
 // Toast
 const toastOptions = {

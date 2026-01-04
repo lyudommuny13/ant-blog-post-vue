@@ -26,7 +26,7 @@
 
                 <div class="d-flex align-items-center justify-content-between mb-3 small">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="remember-me-checkbox">
+                        <input class="form-check-input shadow-sm" type="checkbox" id="remember-me-checkbox">
                         <label class="form-check-label" for="remember-me-checkbox">
                             Remember me
                         </label>
@@ -34,7 +34,7 @@
                     <a href="javascript:void(0)" class="text-decoration-none text-primary">Forgot password?</a>
                 </div>
 
-                <BaseButton :isLoading="state.ui.isLoading" :disabled="state.ui.isDisabled" type="submit">
+                <BaseButton class="w-100" :isLoading="state.ui.isLoading" :disabled="state.ui.isDisabled" type="submit">
                     <span>Login</span>
                 </BaseButton>
             </form>
