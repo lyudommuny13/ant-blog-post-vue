@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Font Families */
+    --font-primary: 'Inter', sans-serif;
+    --font-khmer: 'Kantumruy Pro', sans-serif;
+
+    /* Your Style Preferences */
+    --bg-color: #f4f6f9;
+    /* Crisp off-white */
+    --card-bg: #ffffff;
+    /* Pure white cards */
+    --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.05);
+    /* Diffused shadow */
+
+    /* Transitions */
+    --transition-smooth: all 0.3s ease;
+}
+
+body {
+    font-family: var(--font-primary), var(--font-khmer);
+    -webkit-font-smoothing: antialiased;
+}
+
+#nprogress .bar {
+    background: #4f46e5 !important;
+    /* Indigo primary color */
+    height: 2px !important;
+}
+
+/* Customizing the "glow" effect */
+#nprogress .peg {
+    box-shadow: 0 0 10px #4f46e5, 0 0 5px #4f46e5 !important;
+}
