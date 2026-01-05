@@ -9,16 +9,42 @@ export const useArticleStore = defineStore('article', () => {
     const ownArticles = ref([])
     const isLoading = ref(false)
 
-    const fetchArticle = async () => {
+    const page = ref(1)
+    const hasMore = ref(true)
+
+    const fetchArticle = async (isLoadMore = false) => {
         try {
             isLoading.value = true
-            const res = await api.get("/articles?sortBy=createdAt&sortDir=desc")
-            articles.value = res.data.data.items
+            const res = await api.get("articles", {
+                params: {
+                    _page: page.value,
+                    _per_page: 9,
+                    sortBy: "createdAt",
+                    sortDir: "desc"
+                }
+            })
+
+            const items = res.data.data.items || [];
+            if (isLoadMore) {
+                articles.value.push(...items);
+            } else {
+                page.value = 1;
+                articles.value = items;
+            }
+
+            hasMore.value = res.data.data.meta.hasNextPage === true;
         } catch (error) {
-            console.error(error);
+            throw error
         } finally {
             isLoading.value = false
         }
+    }
+
+    const fetchMoreArticles = async () => {
+        if (!hasMore.value) return
+
+        page.value++
+        await fetchArticle(true)
     }
 
     const fetchArticleById = async (id) => {
@@ -60,6 +86,15 @@ export const useArticleStore = defineStore('article', () => {
         }
     }
 
+    const editArticle = async (id, payload) => {
+        try {
+            const res = await api.put(`/articles/${id}`, payload)
+            return res.data
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const deleteArticle = async (id) => {
         try {
             const res = await api.delete(`/articles/${id}`)
@@ -70,6 +105,7 @@ export const useArticleStore = defineStore('article', () => {
     }
 
     return {
+        hasMore,
         ownArticles,
         article,
         isLoading,
@@ -79,6 +115,8 @@ export const useArticleStore = defineStore('article', () => {
         fetchArticleById,
         createArticle,
         createThumbnail,
-        deleteArticle
+        editArticle,
+        deleteArticle,
+        fetchMoreArticles
     }
 });
