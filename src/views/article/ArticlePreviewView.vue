@@ -48,7 +48,7 @@
                     </p>
                     <small class="text-muted">
                         <i class="bi bi-calendar3 me-1"></i>
-                        {{ new Date(articleStore.article?.createdAt).toLocaleDateString() }}
+                        {{ formatDate(articleStore.article?.createdAt) }}
                     </small>
                 </div>
 
@@ -75,6 +75,7 @@ import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router'
 import { useArticleStore } from '@/stores/article';
 import { onMounted, ref } from 'vue';
+import { formatDate } from '@/utils/dateFormat';
 
 const route = useRoute()
 const router = useRouter()
