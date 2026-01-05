@@ -60,6 +60,15 @@ export const useArticleStore = defineStore('article', () => {
         }
     }
 
+    const editArticle = async (id, payload) => {
+        try {
+            const res = await api.put(`/articles/${id}`, payload)
+            return res.data
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const deleteArticle = async (id) => {
         try {
             const res = await api.delete(`/articles/${id}`)
@@ -79,6 +88,7 @@ export const useArticleStore = defineStore('article', () => {
         fetchArticleById,
         createArticle,
         createThumbnail,
+        editArticle,
         deleteArticle
     }
 });
