@@ -1,9 +1,14 @@
 <template>
-    <div class="d-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 fw-bold text-dark">All Articles</h1>
-        <BaseButton @click="createArticle()" class="btn-dark border shadow-sm">
-            Create Article
-        </BaseButton>
+    <div class="d-flex align-items-center mb-4">
+        <h1 class="h3 mb-0 fw-bold text-dark me-auto">All Articles</h1>
+        <div class="me-3">
+            <BaseInput placeholder="Search articles..." v-model="searchQuery" @update:modelValue="handleSearch" />
+        </div>
+        <div>
+            <BaseButton @click="createArticle()" class="btn btn-dark border shadow-sm d-flex align-items-center gap-2">
+                <i class="bi bi-plus-lg"></i> Create Category
+            </BaseButton>
+        </div>
     </div>
 
     <div class="row g-3">
@@ -27,20 +32,29 @@
 <script setup>
 import ArticleCard from '@/components/common/ArticleCard.vue';
 import ArticleCardSkeleton from '@/components/common/ArticleCardSkeleton.vue';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 import { useArticleStore } from '@/stores/article';
 import BaseButton from '@/components/ui/base/BaseButton.vue';
 
 const articleStore = useArticleStore()
 const router = useRouter()
+const searchQuery = ref('');
 
 const createArticle = () => {
     router.push({ name: 'article.create' })
 }
 
 onMounted(async () => {
-    await articleStore.fetchArticle()
-})
+    await loadData();
+});
+
+const loadData = async () => {
+    await articleStore.fetchArticle(false, searchQuery.value);
+};
+
+const handleSearch = async () => {
+    await loadData();
+};
 
 </script>
