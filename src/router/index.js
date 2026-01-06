@@ -13,6 +13,7 @@ import ArticlePreviewView from '@/views/article/ArticlePreviewView.vue'
 import ArticleEditView from '@/views/article/ArticleEditView.vue'
 import CategoryListView from '@/views/category/CategoryListView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
+import ForbiddenView from '@/views/ForbiddenView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +75,12 @@ const router = createRouter({
         title: 'Login',
         // guestOnly: true
       }
+    },
+    {
+      path: '/403',
+      name: 'page-403',
+      component: ForbiddenView,
+      meta: { title: "403 Forbidden" }
     },
     {
       path: '/:pathMatch(.*)*',
