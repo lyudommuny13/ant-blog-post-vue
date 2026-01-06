@@ -11,6 +11,7 @@ import ArticleListView from '@/views/article/ArticleListView.vue'
 import ArticleCreateView from '@/views/article/ArticleCreateView.vue'
 import ArticlePreviewView from '@/views/article/ArticlePreviewView.vue'
 import ArticleEditView from '@/views/article/ArticleEditView.vue'
+import CategoryListView from '@/views/category/CategoryListView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,12 @@ const router = createRouter({
           name: 'dashboard',
           component: DashboardView,
           meta: { title: 'Dashboard' }
+        },
+        {
+          path: 'category',
+          meta: { title: 'Category' },
+          component: CategoryListView,
+          name: "category"
         },
         {
           path: 'article',
@@ -55,7 +62,7 @@ const router = createRouter({
             }
           ]
         },
-        
+
       ]
     },
     {

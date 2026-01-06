@@ -18,8 +18,8 @@
             </tr>
         </tbody>
         <tbody v-else>
-            <tr v-if="!items.length">
-                <td :colspan="columns.length + 1" class="text-center py-5">
+            <tr v-if="!items?.length">
+                <td :colspan="columns?.length + 1" class="text-center py-5">
                     <p class="fw-semibold mb-0">No data found</p>
                 </td>
             </tr>
