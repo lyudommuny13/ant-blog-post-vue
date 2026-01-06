@@ -117,6 +117,7 @@ export const useArticleStore = defineStore('article', () => {
         article,
         isLoading,
         articles,
+        searchQuery,
         fetchOwnArticle,
         fetchArticle,
         fetchArticleById,

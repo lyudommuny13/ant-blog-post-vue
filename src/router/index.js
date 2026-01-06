@@ -12,6 +12,7 @@ import ArticleCreateView from '@/views/article/ArticleCreateView.vue'
 import ArticlePreviewView from '@/views/article/ArticlePreviewView.vue'
 import ArticleEditView from '@/views/article/ArticleEditView.vue'
 import CategoryListView from '@/views/category/CategoryListView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -73,6 +74,14 @@ const router = createRouter({
         title: 'Login',
         // guestOnly: true
       }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: NotFoundView,
+      name: 'not-found',
+      meta: {
+        title: 'Not Found'
+      }
     }
   ],
   linkExactActiveClass: 'active',
@@ -82,7 +91,6 @@ router.beforeEach(async (to, from) => {
   NProgress.start()
 
   const authStore = useAuthStore()
-  const isAuthenticated = !!authStore.token
 
   document.title = to.meta.title ? `${to.meta.title} - My Admin` : "My Admin"
 

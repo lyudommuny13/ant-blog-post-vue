@@ -3,7 +3,7 @@
         <h1 class="h3 mb-0 fw-bold text-dark me-auto">Categories List</h1>
 
         <div class="me-3">
-            <BaseInput placeholder="Search category..." v-model="searchQuery" @update:modelValue="handleSearch" />
+            <BaseInput placeholder="Search category..." v-model="categoryStore.searchQuery" />
         </div>
 
         <div>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useCategoryStore } from '@/stores/category';
 import BaseTable from '@/components/ui/base/BaseTable.vue';
 import { useRequireValidator } from '@/composables/useRequireValidator';
@@ -57,7 +57,6 @@ const categoryStore = useCategoryStore();
 const isLoading = ref(false);
 const toggleModal = ref(false);
 const categoryName = ref('');
-const searchQuery = ref('');
 
 const modalMode = ref('create');
 const modalTitle = ref('');
@@ -72,12 +71,19 @@ onMounted(async () => {
 });
 
 const loadData = async () => {
-    await categoryStore.fetchCategory(false, searchQuery.value);
+    await categoryStore.fetchCategory(false, categoryStore.searchQuery);
 };
 
-const handleSearch = async () => {
-    await loadData();
-};
+let timeOut = null
+watch(
+    () => categoryStore.searchQuery,
+    (newVal) => {
+        clearTimeout(timeOut);
+        timeOut = setTimeout(() => {
+            loadData()
+        }, 300)
+    }
+)
 
 const openModal = async (mode, id = null) => {
     modalMode.value = mode;
