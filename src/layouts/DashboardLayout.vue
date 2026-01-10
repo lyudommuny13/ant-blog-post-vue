@@ -1,4 +1,3 @@
-DashboardLayout.vue
 <template>
     <div class="admin-layout">
         <AppNavbar @toggle="toggleSidebar" />
