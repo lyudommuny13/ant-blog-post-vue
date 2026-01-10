@@ -11,12 +11,20 @@ export const useArticleStore = defineStore('article', () => {
 
     const page = ref(1)
     const hasMore = ref(true)
+    const searchQuery = ref('');
 
-    const fetchArticle = async (isLoadMore = false) => {
+    const fetchArticle = async (isLoadMore = false, search = '') => {
         try {
             isLoading.value = true
+            searchQuery.value = search
+
+            if (!isLoadMore) {
+                page.value = 1;
+            }
+
             const res = await api.get("articles", {
                 params: {
+                    search: searchQuery.value,
                     _page: page.value,
                     _per_page: 9,
                     sortBy: "createdAt",
@@ -28,7 +36,6 @@ export const useArticleStore = defineStore('article', () => {
             if (isLoadMore) {
                 articles.value.push(...items);
             } else {
-                page.value = 1;
                 articles.value = items;
             }
 
@@ -44,7 +51,7 @@ export const useArticleStore = defineStore('article', () => {
         if (!hasMore.value) return
 
         page.value++
-        await fetchArticle(true)
+        await fetchArticle(true, searchQuery.value)
     }
 
     const fetchArticleById = async (id) => {
@@ -110,6 +117,7 @@ export const useArticleStore = defineStore('article', () => {
         article,
         isLoading,
         articles,
+        searchQuery,
         fetchOwnArticle,
         fetchArticle,
         fetchArticleById,

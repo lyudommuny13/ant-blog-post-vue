@@ -30,43 +30,50 @@
         </div>
 
         <div v-else class="article-detail">
-            <h2 class="fw-bold mb-3 text-dark">{{ articleStore.article?.title }}</h2>
 
-            <div class="card border-0 shadow-subtle overflow-hidden mb-4">
-                <img :src="articleStore.article?.thumbnail" alt="Thumbnail" class="img-fluid object-fit-cover"
-                    style="height: 450px; width: 100%;" />
-            </div>
+            <template v-if="!articleStore.article?.id">
+                <NoItemFound />
+            </template>
 
-            <div class="article-meta d-flex align-items-center gap-3 mb-4 pb-4 border-bottom">
-                <img :src="articleStore.article?.creator.avatar" alt="Creator Avatar"
-                    class="rounded-circle border border-2 border-white shadow-sm" width="40" height="40" />
+            <template v-else>
+                <h2 class="fw-bold mb-3 text-dark">{{ articleStore.article?.title }}</h2>
 
-                <div>
-                    <p class="mb-0 fw-semibold text-dark">
-                        {{ articleStore.article?.creator.firstName }}
-                        {{ articleStore.article?.creator.lastName }}
+                <div class="card border-0 shadow-subtle overflow-hidden mb-4">
+                    <img :src="articleStore.article?.thumbnail" alt="Thumbnail" class="img-fluid object-fit-cover"
+                        style="height: 450px; width: 100%;" />
+                </div>
+
+                <div class="article-meta d-flex align-items-center gap-3 mb-4 pb-4 border-bottom">
+                    <img :src="articleStore.article?.creator.avatar" alt="Creator Avatar"
+                        class="rounded-circle border border-2 border-white shadow-sm" width="40" height="40" />
+
+                    <div>
+                        <p class="mb-0 fw-semibold text-dark">
+                            {{ articleStore.article?.creator.firstName }}
+                            {{ articleStore.article?.creator.lastName }}
+                        </p>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar3 me-1"></i>
+                            {{ formatDate(articleStore.article?.createdAt) }}
+                        </small>
+                    </div>
+
+                    <div class="ms-auto">
+                        <span class="badge rounded-pill bg-light text-primary px-3 py-2 border">
+                            <i class="bi bi-tag-fill me-1"></i>
+                            {{
+                                articleStore.article?.category?.name || "uncategorized"
+                            }}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="article-body lh-lg text-secondary" style="font-size: 1.1rem;">
+                    <p>
+                        {{ articleStore.article?.content }}
                     </p>
-                    <small class="text-muted">
-                        <i class="bi bi-calendar3 me-1"></i>
-                        {{ formatDate(articleStore.article?.createdAt) }}
-                    </small>
                 </div>
-
-                <div class="ms-auto">
-                    <span class="badge rounded-pill bg-light text-primary px-3 py-2 border">
-                        <i class="bi bi-tag-fill me-1"></i>
-                        {{
-                            articleStore.article?.category?.name || "uncategorized"
-                        }}
-                    </span>
-                </div>
-            </div>
-
-            <div class="article-body lh-lg text-secondary" style="font-size: 1.1rem;">
-                <p>
-                    {{ articleStore.article?.content }}
-                </p>
-            </div>
+            </template>
         </div>
     </div>
 </template>
@@ -76,6 +83,7 @@ import { useRouter } from 'vue-router'
 import { useArticleStore } from '@/stores/article';
 import { onMounted, ref } from 'vue';
 import { formatDate } from '@/utils/dateFormat';
+import NoItemFound from '../NoItemFound.vue';
 
 const route = useRoute()
 const router = useRouter()

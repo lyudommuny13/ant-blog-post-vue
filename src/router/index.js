@@ -11,6 +11,9 @@ import ArticleListView from '@/views/article/ArticleListView.vue'
 import ArticleCreateView from '@/views/article/ArticleCreateView.vue'
 import ArticlePreviewView from '@/views/article/ArticlePreviewView.vue'
 import ArticleEditView from '@/views/article/ArticleEditView.vue'
+import CategoryListView from '@/views/category/CategoryListView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
+import ForbiddenView from '@/views/ForbiddenView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +28,12 @@ const router = createRouter({
           name: 'dashboard',
           component: DashboardView,
           meta: { title: 'Dashboard' }
+        },
+        {
+          path: 'category',
+          meta: { title: 'Category' },
+          component: CategoryListView,
+          name: "category"
         },
         {
           path: 'article',
@@ -55,7 +64,7 @@ const router = createRouter({
             }
           ]
         },
-        
+
       ]
     },
     {
@@ -66,6 +75,20 @@ const router = createRouter({
         title: 'Login',
         // guestOnly: true
       }
+    },
+    {
+      path: '/403',
+      name: 'page-403',
+      component: ForbiddenView,
+      meta: { title: "403 Forbidden" }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: NotFoundView,
+      name: 'not-found',
+      meta: {
+        title: 'Not Found'
+      }
     }
   ],
   linkExactActiveClass: 'active',
@@ -75,7 +98,6 @@ router.beforeEach(async (to, from) => {
   NProgress.start()
 
   const authStore = useAuthStore()
-  const isAuthenticated = !!authStore.token
 
   document.title = to.meta.title ? `${to.meta.title} - My Admin` : "My Admin"
 
